@@ -46,6 +46,30 @@ Here's and schematic of how I recommend to do the video capturing so it will be 
 
 ![](IMG/Schematic_1.png)
 
+Great! Now that the videos are recorded it's time to capture our data. This is where the structure of recording I mentioned earlier comes useful. First off we will create our `.csv` to store our data. By executing the cell a file will be created that when opened with any spreadsheet program will look like this:
+
+![](IMG/CSV_file.png)
+
+`class` will represent the movement, `accuracy` will represent if it's right or wrong and `sequence` will represent the sequence of frames were those points were captured. The rest of columns are the individual values of each point of the body (x, y, z), right hand and left hand. The value `v` represents the visibility captured by mediapipe, here I'm capturing it because if for your application you only need to detect the body can be useful, if you want to detect hands (as in this case) it won't be that useful because the hands cannot capture visibility. That's why once it's filled on the hands you'll always get a 0. As the hands don't get visibility values if they're not detected on screen they won't output any value. For that reason, I modified the capture code to always output a value, even if it's a 0, this will help us have the same amount of points always.
+
+Next cell will open up the video recorded `cap = cv2.VideoCapture('your_video.your_extension')` and will play it rendering the different landmarks and connections. Before executing we will assign the correct label to the movement of the video. For that, you'll go to the end of the cell and change the string:
+
+```python
+df = pd.read_csv('coordinates_1.csv')
+df.loc[df['accuracy'].notna(), 'class'] = 'your_label'
+df.to_csv('coordinates_1.csv', index=False)
+```
+
+Once recording you'll have to be quick with your keyboard!!! If the movement seen on screen is right you'll have to press `r` and it will automatically capture all the points for each frame until you press `s` to stop, same with wrong movements you'll press `w` to capture the point for the amount of frames desired. To quit the capture, press `q`. Here's a quick keyboard map:
+
+![](IMG/PS_Keyboard.png)
+
+Do that for every video you have and get all the different movements mapped. Once that's done if you open the `.csv` you'll get the following structure:
+
+![](IMG/CSV_Filled.png)
+
+
+
 
 
 
