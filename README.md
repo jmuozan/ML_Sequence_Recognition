@@ -106,9 +106,27 @@ The last part of this step will be creating a label map to map numbers into our 
 
 ## 3rd step: GPU set up
 
+All the code in this step (from Cell 22 to 24) is based on the code made by [**fotiecodes**](*https://blog.fotiecodes.com/install-tensorflow-on-your-mac-m1m2m3-with-gpu-support-clqs92bzl000308l8a3i35479*) to set up and make sure that you GPU is working for the training part. This code will only be useful if you use a Macbook with apple silicon (M1, M2, M3...) if you're not this code won't work for you. If you're using and Nvidia GPU you can also set up your GPU to speed up the training. Please refer to [Tensorflow documentation](https://www.tensorflow.org/guide/gpu).
 
+## 4th step: Training
 
+In this part we will divide our big array again into 4 different variables. The first split will be to divide the labels from the points. These values we will assign to y and X. After this in order to train the model we will divide again X and y into X_train, X_test, y_train and y_test. This will be the different values used by the model to train itself and then test its results. After this, on Cell 29, Logs is set up, this will help keep track of the training in real time, we will be able to check how the training it's going. To do it, once the training is going you can go to the terminal `cd. your_directory` and write the following command `tensorboard --logdir=.` 
 
+![](IMG/scalars_loss.png)
+
+After that, in the following part, we will set up our neural network, which I didn't set up myself in this code as I haven't checked well the documentation of Tensorflow. The one in the code is optimized by Chat-GPT4. It did a really good job as the ones from tutorials I was setting up were super slow while training. I recommend to fully read the documentation (As I will do) to optimize it to its maximum. Lastly, we will compile the model and run it with `model.fit`. 
+
+## 5th step: Tests
+
+After training, we can save our `.h5` file which will be the weights used in the network and we will be able to use them in any other script. In this part we set up some predictions and compare them to the results of the actual array to see the accuracy of the model in real tests.
+
+## 6th step: Metrics
+
+This part of the code just imports the multi label confusion matrix and applies it to our model to see how well it preformed. If you want to know more about the `multilable_confusion_matrix` you can check it's documentation [**here**](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.multilabel_confusion_matrix.html)
+
+## 7th step: Finally real time testing!!!!!
+
+This last block of code which still is in progress, lets you test the model in real time with your camera opened. I'm still working on it's interface but for now on the upper-left corner it will tell you which action are you doing, if it's wrong the text and landmarks rendered on your body will be in red and if it's right they will be in green.
 
 
 
