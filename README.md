@@ -124,9 +124,15 @@ After training, we can save our `.h5` file which will be the weights used in the
 
 This part of the code just imports the multi label confusion matrix and applies it to our model to see how well it preformed. If you want to know more about the `multilable_confusion_matrix` you can check it's documentation [**here**](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.multilabel_confusion_matrix.html)
 
-## 7th step: Finally real time testing!!!!!
+## 7th step: Finally!!!!! Some real time testing
 
 This last block of code which still is in progress, lets you test the model in real time with your camera opened. I'm still working on it's interface but for now on the upper-left corner it will tell you which action are you doing, if it's wrong the text and landmarks rendered on your body will be in red and if it's right they will be in green.
+
+![](IMG/Final.gif)
+
+## Conclusions
+
+The model doesn't have the best accuracy but it partially works, I'm glad I did this test as now I now I will probably need a lot more of sample when I contact with some artisan to put it to the test. I can't wait to see how effective it can be with different arts and crafts. Thanks for reading until here! <3
 
 
 
