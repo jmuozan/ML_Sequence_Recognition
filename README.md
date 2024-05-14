@@ -6,7 +6,7 @@ As part of my thesis project on Future Learning focused on Arts and Crafts I dec
 
 
 
-## What files are available on the repo?
+##  What files are available on the repo?
 
 In this repository you'll find:
 
@@ -16,7 +16,7 @@ In this repository you'll find:
 - `IMG` folder, with the images for this documentation
 - `CSVs` for you to see how the data will look like during it's collection and treatment
 
-##  References
+## References
 
 If you want to use ML to predict sequences but this structure doesn't fit to you I highly recommend to check the following tutorials where I've been inspired:
 
@@ -24,7 +24,7 @@ If you want to use ML to predict sequences but this structure doesn't fit to you
 - [Nicholas Renotte: AI Learns to Do Deadlifts](https://www.youtube.com/watch?v=H7cGq0xIHbc&list=PLtjLv8XIYA2GPl5Pju2eebqfV9oOlB675)
 - [Nicholas Renotte: Training my deadlift bot with MediaPipe and OpenCV](https://www.youtube.com/watch?v=PGsAsuwBdw0&list=PLtjLv8XIYA2GPl5Pju2eebqfV9oOlB675&index=2)
 
-##  How does it work?
+## How does it work?
 
 In this part I'm going to walk you through the different steps followed by my code. Also I will try to explain what errors you might get while trying to execute the code and how to solve them. (Also, if you find any error that is not solved here don't doubt on contacting me so I can update the documentation)
 
@@ -70,7 +70,7 @@ Do that for every video you have and get all the different movements mapped. Onc
 
 After capturing all the information for each movement (in case you did it my way) you'll end up having a bunch of different `.csv` files (coordinates_1, coordinates_2... , coordinates_n). If you open all of them you'll see that each one is labeled as the image above but only the first has headers. If this is correct we can move on to the second step. (Please check your files to see that you have the labels and you don't have null values because it will affect the process later)
 
-## 2nd step: Process data
+### 2nd step: Process data
 
 The goal of this step is to get our data ready for machine learning. We are dealing with a lot of different data that can have a lot of errors if the detection doesn't work so well so we need to reshape this data in a way that the model can easily understand it, for that reason we will try to split all the data by frames, sequences and movements and then rejoined again. Might look like it doesn't make sense but I found out that working with `.csv` is easier for me. This two steps can be reconfigured in a better way.
 
@@ -104,11 +104,11 @@ Next up from Cell 16 to 17 the code will count the number of sequence folder per
 
 The last part of this step will be creating a label map to map numbers into our labels list so they can be trained, and assign this label map and sequence to the np arrays joining all of them into one big array.
 
-##  3rd step: GPU set up
+### 3rd step: GPU set up
 
 All the code in this step (from Cell 22 to 24) is based on the code made by [**fotiecodes**](*https://blog.fotiecodes.com/install-tensorflow-on-your-mac-m1m2m3-with-gpu-support-clqs92bzl000308l8a3i35479*) to set up and make sure that you GPU is working for the training part. This code will only be useful if you use a Macbook with apple silicon (M1, M2, M3...) if you're not this code won't work for you. If you're using and Nvidia GPU you can also set up your GPU to speed up the training. Please refer to [Tensorflow documentation](https://www.tensorflow.org/guide/gpu).
 
-##  4th step: Training
+### 4th step: Training
 
 In this part we will divide our big array again into 4 different variables. The first split will be to divide the labels from the points. These values we will assign to y and X. After this in order to train the model we will divide again X and y into X_train, X_test, y_train and y_test. This will be the different values used by the model to train itself and then test its results. After this, on Cell 29, Logs is set up, this will help keep track of the training in real time, we will be able to check how the training it's going. To do it, once the training is going you can go to the terminal `cd. your_directory` and write the following command `tensorboard --logdir=.` 
 
@@ -116,21 +116,21 @@ In this part we will divide our big array again into 4 different variables. The 
 
 After that, in the following part, we will set up our neural network, which I didn't set up myself in this code as I haven't checked well the documentation of Tensorflow. The one in the code is optimized by Chat-GPT4. It did a really good job as the ones from tutorials I was setting up were super slow while training. I recommend to fully read the documentation (As I will do) to optimize it to its maximum. Lastly, we will compile the model and run it with `model.fit`. 
 
-## 5th step: Tests
+### 5th step: Tests
 
 After training, we can save our `.h5` file which will be the weights used in the network and we will be able to use them in any other script. In this part we set up some predictions and compare them to the results of the actual array to see the accuracy of the model in real tests.
 
-## 6th step: Metrics
+### 6th step: Metrics
 
 This part of the code just imports the multi label confusion matrix and applies it to our model to see how well it preformed. If you want to know more about the `multilable_confusion_matrix` you can check it's documentation [**here**](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.multilabel_confusion_matrix.html)
 
-##  7th step: Finally!!!!! Some real time testing
+### 7th step: Finally!!!!! Some real time testing
 
 This last block of code which still is in progress, lets you test the model in real time with your camera opened. I'm still working on it's interface but for now on the upper-left corner it will tell you which action are you doing, if it's wrong the text and landmarks rendered on your body will be in red and if it's right they will be in green.
 
 ![](IMG/Final.gif)
 
-##  Conclusions
+### Conclusions
 
 The model doesn't have the best accuracy but it partially works, I'm glad I did this test as now I now I will probably need a lot more of sample when I contact with some artisan to put it to the test. I can't wait to see how effective it can be with different arts and crafts. Thanks for reading until here! <3
 
