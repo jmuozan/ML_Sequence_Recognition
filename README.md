@@ -68,6 +68,44 @@ Do that for every video you have and get all the different movements mapped. Onc
 
 ![](IMG/CSV_Filled.png)
 
+After capturing all the information for each movement (in case you did it my way) you'll end up having a bunch of different `.csv` files (coordinates_1, coordinates_2... , coordinates_n). If you open all of them you'll see that each one is labeled as the image above but only the first has headers. If this is correct we can move on to the second step. (Please check your files to see that you have the labels and you don't have null values because it will affect the process later)
+
+## 2nd step: Process data
+
+The goal of this step is to get our data ready for machine learning. We are dealing with a lot of different data that can have a lot of errors if the detection doesn't work so well so we need to reshape this data in a way that the model can easily understand it, for that reason we will try to split all the data by frames, sequences and movements and then rejoined again. Might look like it doesn't make sense but I found out that working with `.csv` is easier for me. This two steps can be reconfigured in a better way.
+
+Before splitting all the data by sequences and labels we will join the data files in one big file were we will take out the not important data and merge the labeling. Cell 8 will join all our different `.csv` into one file. Don't forget to add as many data frames as you need and add them to `combined_df` 
+
+```python
+df1 = pd.read_csv('coordinates_1.csv', header=None)
+df2 = pd.read_csv('coordinates_2.csv', header=None)
+....
+```
+
+![](IMG/CSV_ESQUEMA.png)Once all of them are joined on `combined_coordinates.csv` we will first `.drop` all the visibility columns on Cell 9 (as I mentioned earlier I'm also detecting hands that don't have visibility values so they're not useful in this case. If you just want to detect body maybe they can be useful), and on Cell 10 we will merge the first to labeling columns `class` and `accuracy` into `label` this will help the array that we will create later have 1 dimension to machine learn it. This block of code will transform the `accuracy` column 0s and 1s into Ws and Rs and will merge them with the information on `class` after this, it will drop the columns. 
+
+![](IMG/Merged_labels.png)
+
+Once that's done we will check that the amount of points captured corresponds to the rows of the array-2 (2 being the labeling columns) to know the amount of point necessary we will multiply the amount of point for each detection*3. 
+
+![](IMG/CODE.png)
+
+![](IMG/mp_points.png)
+
+Following up, on Cell 12 we will take out the unique labels of the modified `.csv` and we will assign them to a string for later.
+
+After this, Cell 13 and Cell 14 will create the data base directory with folders and will split all the `.csv` file and will split all the movements, sequences and frames and save them in the respective folders in an flatten numpy array.
+
+![](IMG/Folder_structure.png)
+
+Next up from Cell 16 to 17 the code will count the number of sequence folder per movement and per sequence and will equalize all the folders, creating new ones, then it will create new `np.zeros` arrays to make every movement have the same amount of sequences and the same amount of frames, even if they are full of zeros. This will allow to do the training. 
+
+***NOTE:** Be aware to assign the correct data type to the new created arrays `zero_array = np.zeros(225, dtype=np.float32)` as Tensorflow (the library we will use for training) does not support `float.64` 
+
+The last part of this step will be creating a label map to map numbers into our labels list so they can be trained, and assign this label map and sequence to the np arrays joining all of them into one big array.
+
+## 3rd step: GPU set up
+
 
 
 
