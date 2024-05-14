@@ -38,13 +38,13 @@ The first big block of code (Cell 3) will make sure that your laptop can access 
 
 ***NOTE:** A common error will be that executing the cell gives you an error or opens up a camera you don't want to use, if this happens try to change the number on `cap = cv2.VideoCapture(0)` as depending on the cameras set up on your computer the number will be different. (On my MacBook number `0` corresponds to my webcam)
 
-![](/Users/jorgemuyo/Desktop/ML_Craftsmanship/IMG/Video_1.gif)
+![](IMG/Video_1.gif)
 
 Next up you'll record your video on Cell 4. If you have your video already recorded go straight to the next Cell. Cell 4 will be similar to cell 3 but this one won't show the landmarks of mediapipe. Here you will need to do the movements you want to capture. In other to use them for machine learning you will have to repeat them a bunch of times in the right and wrong way (In my test I captured two different movements and inside of each I captured around 30 times each way(right and wrong)). If you want to detect more than one movement right and wrong I will recommend to re-execute the cell and save different videos for different movements so that way can be more organized, even though it will work fine if it's just with one video.
 
 Here's and schematic of how I recommend to do the video capturing so it will be easier to work with that later:
 
-![](/Users/jorgemuyo/Desktop/ML_Craftsmanship/IMG/Mesa de trabajo 2.png)
+![](IMG/Schematic_1.png)
 
 
 
