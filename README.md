@@ -154,10 +154,10 @@ The model doesn't have the best accuracy but it partially works, I'm glad I did 
 - [ ] Described problems and how the team solved them
 - [ ] References and resources
 - [x] Photograph’s of the end artefacts
-- [ ] Attendance to classes
-- [ ] Proactive behaviours to find answers during the challenge
-- [ ] Help others student’s projects
-- [ ] Participation in feedbacks
+- [x] Attendance to classes
+- [x] Proactive behaviours to find answers during the challenge
+- [x] Help others student’s projects
+- [x] Participation in feedbacks
 - [ ] Explode
 
 
