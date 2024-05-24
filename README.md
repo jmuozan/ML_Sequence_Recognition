@@ -4,7 +4,36 @@
 
 As part of my thesis project on Future Learning focused on Arts and Crafts I decided to prototype for third MicroChallenge a machine learning model that can learn certain actions and tell you when you're doing them right or wrong. With a live camera prediction you'll be able to know if the movement is being done in the correct way.
 
+## Overview
 
+The project involves creating a machine learning model capable of detecting specific actions via a live camera feed. The goal is to provide real-time feedback on whether the actions are performed correctly or incorrectly, with applications in arts and crafts.
+
+The system uses a live camera to capture movements. By leveraging MediaPipe for landmark detection and a trained machine learning model, the program evaluates the accuracy of the movements in real-time, displaying feedback directly on the screen.
+
+## Propose 
+
+The system is designed to:
+
+- Provide real-time feedback on the correctness of performed actions.
+
+- Enhance learning experiences in arts and crafts by identifying right and wrong movements.
+
+It is not intended for:
+
+- Situations where high-stakes precision is required.
+
+## Planing
+
+The steps followed during the MicroChallenge week were the following:
+
+1. Conceptualizing the project idea.
+
+2. Collecting and processing data.
+
+3. Training the machine learning model.
+4. Debugging the code
+5. Implementing real-time prediction using a Python script.
+6. Iterating on design and functionality based on test results.
 
 ##  What files are available on the repo?
 
@@ -15,6 +44,28 @@ In this repository you'll find:
 - `actions.h5` the model already trained
 - `IMG` folder, with the images for this documentation
 - `CSVs` for you to see how the data will look like during it's collection and treatment
+
+## What you'll need
+
+**Software**: Python, TensorFlow, OpenCV, MediaPipe.
+
+- **MediaPipe** for detecting body landmarks.
+
+- **OpenCV** for video capture and display.
+
+- **TensorFlow** for training the machine learning model.
+
+- **Python** or **Jupyter installed.
+
+This technology is used meaningfully by:
+
+- Utilizing MediaPipe’s robust landmark detection to ensure accurate data collection.
+
+- Applying TensorFlow for creating a responsive and adaptable machine learning model.
+
+- Integrating these tools in a straightforward Python script to maximize accessibility and ease of use.
+
+**Hardware**: Standard computer with webcam. (If possible, an Nvidia GPU or Apple silicon for hardware acceleration although not necessary)
 
 ## References
 
@@ -130,37 +181,20 @@ This last block of code which still is in progress, lets you test the model in r
 
 ![](IMG/Final.gif)
 
+## Trial and error
+Coming from a background in Industrial Design Engineering, transitioning to coding was incredibly challenging for me as I initially lacked computational thinking skills. Despite this, I managed to overcome the difficulties and am proud of the results. 
+
+The journey of learning and applying coding skills was integral to the success of this project, and I am confident that with further experience, I will continue to enhance and expand these capabilities.
+
 ## Conclusions
 
-The model doesn't have the best accuracy but it partially works, I'm glad I did this test as now I now I will probably need a lot more of sample when I contact with some artisan to put it to the test. I can't wait to see how effective it can be with different arts and crafts. Thanks for reading until here! <3
+The model doesn’t have the best accuracy, but it partially works, providing valuable insights into the potential of using machine learning for action detection in arts and crafts. This initial test has shown me that significantly more sample data will be needed to improve the model’s performance. When I collaborate with artisans and gather a larger dataset, I believe the system’s accuracy will improve.
 
-### To-do
+I am excited about the prospect of testing the model in real-world scenarios with different arts and crafts, where it can provide real-time feedback to practitioners. This project has been a significant learning experience, and despite its current limitations, I am proud of what has been achieved so far. It lays a strong foundation for future development and refinement.
 
-- [ ] Initial idea
-- [ ] Interaction Description
-- [x] Research references (Links, papers, videos....)
-- [ ] Propose (What is supposed to do or not to do)
-- [ ] Shown how your team planned and executed the project. (Explain personal contributions)
-- [ ] Integrated Design (How you designed it - relation between elements)
-- [ ] Honest Design (use of technology in a meaningful way, in relation to your interventions)
-- [ ] Explore design boundaries (based on your expertise)
-- [x] Add names and links to your individual pages
-- [x] Design process (How did you iterate)
-- [ ] How did you fabricate it (fabrication processes)
-- [x] Digital system (illustration explaining function, parts, protocols)
-- [x] Design & Fabrication files (open source or open format)
-- [ ] BOM (Build of Materials)
-- [ ] Reflect about future development opportunity
-- [ ] Described problems and how the team solved them
-- [ ] References and resources
-- [x] Photograph’s of the end artefacts
-- [x] Attendance to classes
-- [x] Proactive behaviours to find answers during the challenge
-- [x] Help others student’s projects
-- [x] Participation in feedbacks
-- [ ] Explode
+Thank you for reading until here! I am eager to continue this journey and explore how machine learning can enhance the practice and teaching of arts and crafts. <3
 
-
+Feel free to ask for any further detail or clarification on any of the sections.
 
 ### Real time predictions python code
 
@@ -254,3 +288,28 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
     cv2.destroyAllWindows()
 ```
 
+### To-do Checklist
+
+- [x] Initial idea
+- [x] Interaction Description
+- [x] Research references (Links, papers, videos....)
+- [x] Propose (What is supposed to do or not to do)
+- [x] Shown how your team planned and executed the project. (Explain personal contributions)
+- [x] Integrated Design (How you designed it - relation between elements)
+- [x] Honest Design (use of technology in a meaningful way, in relation to your interventions)
+- [ ] Explore design boundaries (based on your expertise)
+- [x] Add names and links to your individual pages
+- [x] Design process (How did you iterate)
+- [x] How did you fabricate it (fabrication processes)
+- [x] Digital system (illustration explaining function, parts, protocols)
+- [x] Design & Fabrication files (open source or open format)
+- [x] BOM (Build of Materials)
+- [ ] Reflect about future development opportunity
+- [x] Described problems and how the team solved them
+- [x] References and resources
+- [x] Photograph’s of the end artefacts
+- [x] Attendance to classes
+- [x] Proactive behaviours to find answers during the challenge
+- [x] Help others student’s projects
+- [x] Participation in feedbacks
+- [x] Explode
