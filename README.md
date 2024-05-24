@@ -297,14 +297,14 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 - [x] Shown how your team planned and executed the project. (Explain personal contributions)
 - [x] Integrated Design (How you designed it - relation between elements)
 - [x] Honest Design (use of technology in a meaningful way, in relation to your interventions)
-- [ ] Explore design boundaries (based on your expertise)
+- [x] Explore design boundaries (based on your expertise)
 - [x] Add names and links to your individual pages
 - [x] Design process (How did you iterate)
 - [x] How did you fabricate it (fabrication processes)
 - [x] Digital system (illustration explaining function, parts, protocols)
 - [x] Design & Fabrication files (open source or open format)
 - [x] BOM (Build of Materials)
-- [ ] Reflect about future development opportunity
+- [x] Reflect about future development opportunity
 - [x] Described problems and how the team solved them
 - [x] References and resources
 - [x] Photograph’s of the end artefacts
