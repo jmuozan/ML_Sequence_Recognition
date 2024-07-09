@@ -1,6 +1,6 @@
 #  Machine Learning for Action Detection
 
-#### [Jorge Muñoz Zanón](https://jmuozan.github.io/mdef-website/)
+#### [Jorge Muñoz Zanón](https://jmuozan.github.io/jorgemunyozz.github.io/index.html)
 
 As part of my thesis project on Future Learning focused on Arts and Crafts I decided to prototype for third MicroChallenge a machine learning model that can learn certain actions and tell you when you're doing them right or wrong. With a live camera prediction you'll be able to know if the movement is being done in the correct way.
 
