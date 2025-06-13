@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <title>Action Detection</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: white;
+      }
+      header {
+        display: flex; 
+        justify-content: center; 
+        background-color: white; 
+        padding: 10px 0;
+      }
+      nav ul {
+        list-style: none; 
+        padding: 0; 
+        margin: 0; 
+        display: flex;
+      }
+      nav ul li {
+        margin: 0 15px;
+      }
+      nav ul li a {
+        text-decoration: none; 
+        color: #333; 
+        font-weight: bold;
+      }
+      .main-container {
+        margin-top: 50px;
+      }
+      .container {
+        background-color: white;
+      }
+      .swiper-container {
+        width: 100%; 
+        height: 500px; 
+        background-color: white;
+      }
+      .swiper-slide {
+        text-align: center; 
+        font-size: 18px; 
+        background: transparent; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        transition: transform 0.3s; 
+        cursor: pointer; 
+        position: relative; 
+        padding-bottom: 100px;
+      }
+      .swiper-slide video {
+        display: block; 
+        width: 90%; 
+        height: 90%; 
+        object-fit: cover; 
+        transition: transform 0.3s; 
+        transform: scale(1);
+      }
+      .swiper-slide:hover video {
+        transform: scale(1.2);
+      }
+      .swiper-slide .description {
+        display: none; 
+        font-size: 16px; 
+        margin-top: 50px; 
+        color: #333; 
+        text-align: left; 
+        width: 100%;
+      }
+      .swiper-slide:hover .description {
+        display: block;
+      }
+      #stopPrediction {
+        position: fixed; 
+        bottom: 10px; 
+        right: 10px; 
+        display: none; 
+        padding: 10px 20px; 
+        background-color: red; 
+        color: white; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer;
+      }
+      #camera {
+        display: none; 
+        width: 100%; 
+        height: auto;
+      }
+      #outputCanvas {
+        display: none; 
+        width: 100%; 
+        height: auto;
+      }
+      #videoFeedContainer {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('learn') }}">Learn</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('create') }}">Create</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="main-container">
+      <div class="container">
+        <h1>Select Model to Learn</h1>
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            {% for model in model_options %}
+            <div class="swiper-slide" data-model="{{ model }}">
+              <video src="{{ url_for('static', filename='videos/' + model + '.mp4') }}" muted></video>
+              <div class="description">
+                <div style="display: flex; justify-content: space-between;">
+                  <span>DESCRIPTION: {{ model_data.get(model, {}).get('description', 'N/A') }}</span>
+                  <span>MOVEMENTS: {{ model_data.get(model, {}).get('movements', 'N/A') }}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span>CRAFT NAME: {{ model }}</span>
+                  <span>PRICE: {{ model_data.get(model, {}).get('prize', 'N/A') }}</span>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <button id="stopPrediction">Stop Prediction</button>
+        <div id="videoFeedContainer">
+          <img id="camera" />
+          <canvas id="outputCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 3,
+        centeredSlides: true,
+        spaceBetween: 5,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+          reverseDirection: true,
+        },
+        on: {
+          slideChangeTransitionEnd: function () {
+            document.querySelectorAll('.swiper-slide').forEach(slide => {
+              slide.classList.remove('swiper-slide-active');
+            });
+            document.querySelector('.swiper-slide-next').classList.add('swiper-slide-active');
+            document.querySelector('.swiper-slide-prev').classList.add('swiper-slide-active');
+            document.querySelector('.swiper-slide-active').classList.add('swiper-slide-active');
+          },
+        },
+      });
+
+      function debounce(func, wait = 10, immediate = true) {
+        let timeout;
+        return function() {
+          let context = this, args = arguments;
+          let later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+          };
+          let callNow = immediate && !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+          if (callNow) func.apply(context, args);
+        };
+      }
+
+      window.addEventListener('wheel', debounce(function(e) {
+        if (e.deltaY > 0) {
+          swiper.slideNext();
+        } else {
+          swiper.slidePrev();
+        }
+      }, 100));
+
+      function startCamera(model) {
+        const camera = document.getElementById('camera');
+        fetch('/select_model', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ model: model })
+        }).then(() => {
+          camera.src = "/video_feed";
+          camera.style.display = 'block';
+          document.getElementById('outputCanvas').style.display = 'block';
+        });
+      }
+
+      function stopCamera() {
+        const camera = document.getElementById('camera');
+        camera.src = "";
+        camera.style.display = 'none';
+        document.getElementById('outputCanvas').style.display = 'none';
+      }
+
+      document.querySelectorAll('.swiper-slide').forEach(slide => {
+        slide.addEventListener('click', () => {
+          document.querySelectorAll('.swiper-slide').forEach(s => s.classList.remove('selected'));
+          slide.classList.add('selected');
+          const selectedModel = slide.getAttribute('data-model');
+          startCamera(selectedModel); // Start the camera when a model is selected
+          document.getElementById('stopPrediction').style.display = 'block'; // Show stop button
+        });
+
+        slide.addEventListener('mouseenter', () => {
+          swiper.autoplay.stop();
+          slide.hoverTimeout = setTimeout(() => {
+            slide.querySelector('video').play();
+          }, 2000);
+        });
+
+        slide.addEventListener('mouseleave', () => {
+          swiper.autoplay.start();
+          clearTimeout(slide.hoverTimeout);
+          let video = slide.querySelector('video');
+          video.pause();
+          video.currentTime = 0;
+        });
+
+        let video = slide.querySelector('video');
+        video.addEventListener('loadeddata', () => {
+          video.pause();
+        });
+      });
+
+      document.getElementById('stopPrediction').addEventListener('click', () => {
+        fetch('/stop_prediction', { method: 'POST' })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              stopCamera();
+              alert('Prediction stopped successfully');
+              document.getElementById('stopPrediction').style.display = 'none';
+            } else {
+              alert('Failed to stop prediction');
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
